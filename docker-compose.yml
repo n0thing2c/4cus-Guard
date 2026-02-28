@@ -1,0 +1,29 @@
+
+services:
+  redis-message-broker: # Service name
+    image: redis:alpine
+    
+    container_name: redis-container
+
+    # Ports: Ánh xạ cổng từ máy Host (WSL2/Ubuntu) vào trong Container.
+    # Cú pháp: "Cổng_Host:Cổng_Container". Redis mặc định chạy ở 6379.
+    ports:
+      - "6380:6379"
+
+
+  timer:
+    #build image
+    build: 
+      context: . #Use Root directory
+      dockerfile: cmd/timer/dockerfile
+    environment:
+      - REDIS_ADDR=redis:6379 
+      - REDIS_PASS=abc
+      - DB_PATH=/app/data/focus.db
+    volumes:
+        #Src(Local) : dest(in Docker)
+      - ./data:/app/data
+    depends_on:
+        #Call redis before timer
+      - redis-message-broker
+

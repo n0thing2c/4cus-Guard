@@ -1,0 +1,26 @@
+#Builder
+FROM golang:1.24-alpine AS builder
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+
+#Build only 1 binary file
+#Turn off CGO
+RUN CGO_ENABLED=0 GOOS=linux go build -o timer_app ./cmd/timer
+
+#Runner
+FROM alpine:latest
+
+WORKDIR /app
+
+#Copy timezone data
+RUN apk --no-cache add tzdata
+
+#Copy only binary file built from Builder
+COPY --from=builder /app/timer_app .
+
+CMD ["./timer_app"]
