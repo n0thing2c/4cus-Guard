@@ -53,11 +53,13 @@ func main() {
 				//check re-type start
 				var id int
 				err := db.QueryRow(`SELECT id FROM focus_sessions WHERE status = 'active'`).Scan(&id)
-				if err == nil || err == sql.ErrNoRows {
-					query := `INSERT INTO focus_sessions (start_time, status) VALUES (?, ?)`
-					db.Exec(query, now, "active")
-				} else {
+				switch err {
+				case sql.ErrNoRows:
+					db.Exec(`INSERT INTO focus_sessions (start_time, status) VALUES (?, ?)`, now, "active")
+				case nil:
 					fmt.Println("You have already started")
+				default:
+					log.Printf("DB error: %v", err)
 				}
 
 			case "stop":
