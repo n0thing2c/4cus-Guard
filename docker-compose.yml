@@ -17,7 +17,7 @@ services:
       context: . #Use Root directory
       dockerfile: cmd/timer/dockerfile
     environment:
-      - REDIS_ADDR=redis:6379 
+      - REDIS_ADDR=redis-message-broker:6379
       - REDIS_PASS=
       - DB_PATH=/app/data/focus.db
     volumes:
