@@ -26,7 +26,7 @@ func NewStartCmd(pub pubsub.Publisher) *cobra.Command {
 			}
 
 			ctx := cmd.Context()
-			pub.Publish(ctx, "Blocker", string(jsonMsg))
+			pub.Publish(ctx, "Timer", string(jsonMsg))
 		},
 	}
 	return cmd
