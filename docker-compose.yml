@@ -18,7 +18,7 @@ services:
       dockerfile: cmd/timer/dockerfile
     environment:
       - REDIS_ADDR=redis:6379 
-      - REDIS_PASS=abc
+      - REDIS_PASS=
       - DB_PATH=/app/data/focus.db
     volumes:
         #Src(Local) : dest(in Docker)
