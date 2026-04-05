@@ -58,7 +58,7 @@ All three components are cross-platform and run on **Windows**, **Linux**, and *
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/4cus-guard.git
+git clone https://github.com/n0thing2c/4cus-guard.git
 cd 4cus-guard
 ```
 
